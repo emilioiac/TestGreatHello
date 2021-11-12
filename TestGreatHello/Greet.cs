@@ -10,22 +10,24 @@ namespace TestGreatHello
         private static string[] SplitComma(string sign, string[] names)
         {
             List<string> list = new List<string>();
-            var stringUnescape = names?.Where(x => x.Contains(Regex.Unescape(x))).ToArray();
-            var stringEsc = stringUnescape?.Where(x => x.Contains("\"")).ToArray();
-            if (!stringEsc.Any(x => x.Contains(sign)))
+            var stringEsc = names?.Where(x => x.Contains("\"")).ToArray();
+            if (!stringEsc.Any(x => x.Contains(sign) && stringEsc != null))
             {
                 var comma = names?.Where(x => x.Contains(sign)).ToArray();
                 names = names?.Except(comma).ToArray();
                 return names?.Concat(comma.SelectMany(x => x.Split(sign))).ToArray();
             }
             else
-            {
-                var stringhepulite = stringUnescape.Except(stringEsc).ToArray();
-                var newString = stringEsc[0].Replace("\"", string.Empty);
+            { 
                 if (stringEsc.Any(x => x.Contains(sign)))
                 {
-                    list.Add(names[0]);
-                    list.Add(newString);
+                    var stringhepulite = stringEsc.Except(stringEsc).ToArray();
+                    var newString = stringEsc[0].Replace("\"", string.Empty);
+                    if (stringEsc.Any(x => x.Contains(sign)))
+                    {
+                        list.Add(names[0]);
+                        list.Add(newString);
+                    }
                 }
                 return list.ToArray();
             }

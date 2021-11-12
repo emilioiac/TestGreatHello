@@ -71,7 +71,7 @@ namespace TestGreatHello.Tests
         {
             var actual = _sut.GreetHello("Bob", "\"Charlie, Dianne\"");
             Assert.AreEqual("Hello, Bob and Charlie, Dianne.", actual);
-            Assert.Pass("Vi ho salutato tutti");
+            Assert.Pass("Split AVOID");
         }
     }
 }
