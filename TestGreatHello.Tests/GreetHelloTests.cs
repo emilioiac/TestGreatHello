@@ -1,8 +1,8 @@
-using System.Net.NetworkInformation;
 using NUnit.Framework;
 
 namespace TestGreatHello.Tests
 {
+    [TestFixture]
     public class GreetHelloTests
     {
         private IGreetHello _sut;
@@ -44,26 +44,34 @@ namespace TestGreatHello.Tests
             Assert.AreEqual("Hello, Oussama and Nicola." , actual);
             Assert.Pass("vi ho salutato entrambi");
         }
-
         [Test]
-        public void ShoulBeMoreNames()
+        public void Should_Split_Name()
         {
-            var actual= _sut.GreetHello("Gino", "Pino", "Rino", "Vino");
-            Assert.AreEqual("Hello, Gino, Pino, Rino and Vino.", actual);
+            var actual = _sut.GreetHello("Oussama", "Nicola", "Emilio");
+            Assert.AreEqual("Hello, Oussama, Nicola and Emilio." , actual);
+            Assert.Pass("Vi ho salutato tutti");
         }
 
         [Test]
-        public void ShoulBeMixed()
+        public void Should_Split_Name_Upper()
         {
-            var actual = _sut.GreetHello("Gino", "Pino", "RINO", "Vino");
-            Assert.AreEqual("Hello, Gino, Pino and Vino. AND HELLO RINO!",actual);
+            var actual = _sut.GreetHello("Oussama", "BRIAN", "Emilio");
+            Assert.AreEqual("Hello, Oussama and Emilio. AND HELLO BRIAN!", actual);
+            Assert.Pass("Vi ho salutato tutti");
         }
-
         [Test]
-        public void ShoulContainComma()
+        public void Should_Split_Name_Comma()
         {
-            var actual = _sut.GreetHello("Gino", "Pino", "Rino, Vino");
-            Assert.AreEqual("Hello, Gino, Pino, Rino and Vino.",actual);
+            var actual = _sut.GreetHello("Bob", "Charlie, Dianne");
+            Assert.AreEqual("Hello, Bob, Charlie and Dianne.", actual);
+            Assert.Pass("Vi ho salutato tutti");
+        }
+        [Test]
+        public void Should_Avoid_Split_Name_Comma()
+        {
+            var actual = _sut.GreetHello("Bob", "\"Charlie, Dianne\"");
+            Assert.AreEqual("Hello, Bob and Charlie, Dianne.", actual);
+            Assert.Pass("Vi ho salutato tutti");
         }
     }
 }
